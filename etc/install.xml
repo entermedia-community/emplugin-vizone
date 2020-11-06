@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="default" name="upgrade">
+
+    <target name="default" depends="clean, update-dependencies, unwar, upgrade"/>
+
+    <property name="appname" value="${ant.project.name}"/>
+    <property name="org" value="EnterMedia, inc."/>
+    <property name="webinf" location="WEB-INF"/>
+    <property name="src" location="${webinf}/src"/>
+    <property name="lib" location="${webinf}/lib"/>
+    <property name="resources" location="resources"/>
+    <property name="build" location="./tmp/oe_upgrade"/>
+    <property name="wardir" location="${build}/wartmp"/>
+    <property name="dockerwebapp" location="/opt/entermediadb/webapp"/>
+    <property name="dockerlib" location="${dockerwebapp}/WEB-INF/lib"/>
+  	<property name="version"  value="dev"/>
+  	<property name="deployDir" location="deploy"/>
+  	<property name="versionDir" location="${deployDir}/${version}"/>
+  	<property name="versionedApp" value="${appname}-${version}"/>
+
+    <target name="clean">
+    </target>
+  
+	
+	<target name="update-dependencies" depends="clean">
+		<mkdir dir="${build}"/>
+		<get src="http://dev.entermediasoftware.com/jenkins/job/emplugin-vizone/lastSuccessfulBuild/artifact/deploy/emplugin-vizone.zip" dest="${build}/emplugin-vizone.zip" />
+    </target>
+    
+  <target name="unwar">
+  	<mkdir dir="${build}/unpacked"/>
+    <unzip dest="${build}/unpacked" src="${build}/emplugin-vizone.zip" />
+  </target>
+  
+  <target name="upgrade">
+  	<echo>Delete old stuff</echo>
+    <delete>
+        <!-- <fileset dir="./lib" includes="emplugin-vizone**.jar"/> -->
+    </delete>
+  	
+    <copy todir="${dockerwebapp}" overwrite="false" preservelastmodified="true">
+        <fileset file="${build}/unpacked"/>
+    </copy>
+
+  	
+    <!--    <delete dir="${build}"/>  -->
+  </target>
+  
+  <target name="extend">
+  	<echo>Reinstall plugin(s)</echo>
+ 	 <delete failonerror="false">
+       <fileset dir="${dockerwebapp}/WEB-INF/base/entermediadb/"/>
+     </delete>
+     <copy todir="${dockerwebapp}/WEB-INF/base/entermediadb" preservelastmodified="true">
+       <fileset dir="${basedir}/base/entermediadb"/>
+     </copy>
+    <delete>
+      <fileset file="${dockerlib}/app-site-manager**.jar"/>
+      <fileset file="${dockerlib}/openedit-money**.jar"/>
+      <fileset file="${dockerlib}/stripe-java**.jar"/>
+    </delete>
+  	
+    <copy todir="${dockerlib}" overwrite="false" preservelastmodified="true">
+      <fileset file="${basedir}/lib/app-site-manager**.jar"/>
+      <fileset file="${basedir}/lib/openedit-money**.jar"/>
+      <fileset file="${basedir}/lib/stripe-java**.jar"/>
+    </copy>
+  </target>
+
+</project>

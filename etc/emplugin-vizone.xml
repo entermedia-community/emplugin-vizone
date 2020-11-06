@@ -1,0 +1,8 @@
+<plugins>
+	<plugin id="emplugin-vizone" title="Vizone Plugin" currentversion="10"
+		installscript="http://dev.entermediasoftware.com/jenkins/view/Dev/job/emplugin-vizone/lastSuccessfulBuild/artifact/deploy/install.js"
+		depends="entermedia-server">
+		<description>Vizone Tools</description>
+		<currentversionnotes></currentversionnotes>
+	</plugin>
+</plugins>

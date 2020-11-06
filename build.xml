@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="default" name="emplugin-vizone">
+
+    <target name="default" depends="clean, update-dependencies, compile,  jar, zip, publish"/>
+    <target name="dependency" depends="default"/>
+   
+    <property name="appname" value="${ant.project.name}"/>
+    <property name="org" value="EnterMedia, Inc."/>
+    <property name="src" location="${basedir}/src"/>
+    <property name="testsrc" location="${basedir}/test"/>
+    <property name="lib" location="${basedir}/lib"/>
+    <property name="etc" location="${basedir}/etc"/>
+    <property name="build" location="${basedir}/build"/>
+    <property name="compiled" location="${basedir}/build/compiled"/>
+
+    <property name="wardir" location="${build}/wartmp"/>
+    <property name="webapp" location="${basedir}/webapp"/>
+    <property name="webinf" location="${webapp}/WEB-INF"/>
+    <property name="branch" value="em10_" />
+    <property name="majorversion" value="10" />
+    <property environment="env" />
+    <property name="version"  value="${majorversion}.${env.BUILD_NUMBER}"/>
+    <property name="deployDir" location="deploy"/>
+    <property name="versionDir" location="${deployDir}/${version}"/>
+    <property name="versionedApp" value="${appname}-${version}"/>
+
+    <property name="catalogdata" location="${webapp}/assets/catalog/data" />
+
+    <target name="clean">
+         <delete dir="${build}"/>
+    </target>
+
+	<target name="update-dependencies" depends="clean">
+	    <mkdir dir="${build}"/>
+	    <mkdir dir="${wardir}/WEB-INF/" />
+		<get dest="${build}/install.xml" src="http://dev.entermediasoftware.com/jenkins/job/em9dev_entermedia-server/lastSuccessfulBuild/artifact/deploy/install.xml"/>
+		<ant antfile="${build}/install.xml" inheritAll="false" dir="${wardir}/WEB-INF/" target="default"/> 
+	</target>
+  
+	
+    <target name="zip" depends="clean">
+		<mkdir dir="${deployDir}/builds/"/>
+		<zip destfile="${deployDir}/builds/${appname}.zip" >			
+			<zipfileset dir="${webapp}/${catalogdata}/fields" />
+            <zipfileset dir="${webapp}/${catalogdata}/views" />
+			<zipfileset dir="${etc}" includes="install.xml"/>			
+		</zip>
+    </target>
+	    
+	
+    <target name="publish" depends=" zip">
+		 	<copy file="${deployDir}/builds/${appname}.zip" overwrite="true"
+		        tofile="${deployDir}/${appname}.zip"/>
+			<copy overwrite="true"  file="${etc}/install.js" 
+				    tofile="${deployDir}/install.js">
+		 		    <filterset>
+		 		      <filter token="BRANCH" value="${branch}"/>
+		 		    </filterset>
+		 	</copy>	
+		 	<copy file="${etc}/emplugin-vizone.xml" overwrite="true"
+					        tofile="${deployDir}/emplugin-vizone.xml">
+					 <filterset>
+					      <filter token="BRANCH" value="${branch}"/>
+				    </filterset>
+			</copy>
+		</target>
+</project>
+
+

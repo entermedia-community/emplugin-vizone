@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="default" name="emplugin-vizone">
 
-    <target name="default" depends="clean, update-dependencies, compile,  jar, zip, publish"/>
+    <target name="default" depends="clean, update-dependencies, zip, publish"/>
     <target name="dependency" depends="default"/>
    
     <property name="appname" value="${ant.project.name}"/>

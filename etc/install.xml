@@ -48,13 +48,13 @@
   
   <target name="extend">
   	<echo>Reinstall plugin(s)</echo>
- 	 <delete failonerror="false">
-       <fileset dir="${dockerwebapp}/WEB-INF/base/entermediadb/"/>
-     </delete>
-     <copy todir="${dockerwebapp}/WEB-INF/base/entermediadb" preservelastmodified="true">
-       <fileset dir="${basedir}/base/entermediadb"/>
+<!-- 	 <delete failonerror="false">
+       <fileset dir="${dockerwebapp}/asset/plugin"/>
+     </delete> -->
+     <copy todir="${dockerwebapp}/" preservelastmodified="true">
+       <fileset dir="${basedir}/"/>
      </copy>
-    <delete>
+  <!--  <delete>
       <fileset file="${dockerlib}/app-site-manager**.jar"/>
       <fileset file="${dockerlib}/openedit-money**.jar"/>
       <fileset file="${dockerlib}/stripe-java**.jar"/>
@@ -65,6 +65,7 @@
       <fileset file="${basedir}/lib/openedit-money**.jar"/>
       <fileset file="${basedir}/lib/stripe-java**.jar"/>
     </copy>
+-->
   </target>
 
 </project>

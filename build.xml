@@ -24,7 +24,7 @@
     <property name="versionDir" location="${deployDir}/${version}"/>
     <property name="versionedApp" value="${appname}-${version}"/>
 
-    <property name="catalogdata" location="${webapp}/assets/catalog/data" />
+    <property name="catalogdata" location="/assets/catalog/data" />
 
     <target name="clean">
          <delete dir="${build}"/>
@@ -41,8 +41,8 @@
     <target name="zip" depends="clean">
 		<mkdir dir="${deployDir}/builds/"/>
 		<zip destfile="${deployDir}/builds/${appname}.zip" >			
-			<zipfileset dir="${catalogdata}/fields" />
-            <zipfileset dir="${catalogdata}/views" />
+			<zipfileset dir="${webapp}${catalogdata}/fields" prefix="${catalogdata}/fields" />
+            <zipfileset dir="${webapp}${catalogdata}/views" prefix="${catalogdata}/views" />
 			<zipfileset dir="${etc}" includes="install.xml"/>			
 		</zip>
     </target>

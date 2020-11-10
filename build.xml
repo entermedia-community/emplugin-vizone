@@ -33,16 +33,16 @@
 	<target name="update-dependencies" depends="clean">
 	    <mkdir dir="${build}"/>
 	    <mkdir dir="${wardir}/WEB-INF/" />
-		<get dest="${build}/install.xml" src="http://dev.entermediasoftware.com/jenkins/job/em9dev_entermedia-server/lastSuccessfulBuild/artifact/deploy/install.xml"/>
-		<ant antfile="${build}/install.xml" inheritAll="false" dir="${wardir}/WEB-INF/" target="default"/> 
+<!--		<get dest="${build}/install.xml" src="http://dev.entermediasoftware.com/jenkins/job/em9dev_entermedia-server/lastSuccessfulBuild/artifact/deploy/install.xml"/> 
+		<ant antfile="${build}/install.xml" inheritAll="false" dir="${wardir}/WEB-INF/" target="default"/> -->
 	</target>
   
 	
     <target name="zip" depends="clean">
 		<mkdir dir="${deployDir}/builds/"/>
 		<zip destfile="${deployDir}/builds/${appname}.zip" >			
-			<zipfileset dir="${webapp}/${catalogdata}/fields" />
-            <zipfileset dir="${webapp}/${catalogdata}/views" />
+			<zipfileset dir="${catalogdata}/fields" />
+            <zipfileset dir="${catalogdata}/views" />
 			<zipfileset dir="${etc}" includes="install.xml"/>			
 		</zip>
     </target>
@@ -51,12 +51,12 @@
     <target name="publish" depends=" zip">
 		 	<copy file="${deployDir}/builds/${appname}.zip" overwrite="true"
 		        tofile="${deployDir}/${appname}.zip"/>
-			<copy overwrite="true"  file="${etc}/install.js" 
+			<!-- <copy overwrite="true"  file="${etc}/install.js" 
 				    tofile="${deployDir}/install.js">
 		 		    <filterset>
 		 		      <filter token="BRANCH" value="${branch}"/>
 		 		    </filterset>
-		 	</copy>	
+		 	</copy>	 -->
 		 	<copy file="${etc}/emplugin-vizone.xml" overwrite="true"
 					        tofile="${deployDir}/emplugin-vizone.xml">
 					 <filterset>

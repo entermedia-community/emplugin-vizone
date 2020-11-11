@@ -12,10 +12,7 @@
     <property name="etc" location="${basedir}/etc"/>
     <property name="build" location="${basedir}/build"/>
     <property name="compiled" location="${basedir}/build/compiled"/>
-
     <property name="wardir" location="${build}/wartmp"/>
-    <property name="webapp" location="${basedir}/webapp"/>
-    <property name="webinf" location="${webapp}/WEB-INF"/>
     <property name="branch" value="em10_" />
     <property name="majorversion" value="10" />
     <property environment="env" />
@@ -24,7 +21,7 @@
     <property name="versionDir" location="${deployDir}/${version}"/>
     <property name="versionedApp" value="${appname}-${version}"/>
 
-    <property name="catalogdata" location="/assets/catalog/data" />
+    <property name="catalogdata" location="webapp/WEB-INF/entermedia/catalog/data" />
 
     <target name="clean">
          <delete dir="${build}"/>
@@ -32,17 +29,13 @@
 
 	<target name="update-dependencies" depends="clean">
 	    <mkdir dir="${build}"/>
-	    <mkdir dir="${wardir}/WEB-INF/" />
-<!--		<get dest="${build}/install.xml" src="http://dev.entermediasoftware.com/jenkins/job/em9dev_entermedia-server/lastSuccessfulBuild/artifact/deploy/install.xml"/> 
-		<ant antfile="${build}/install.xml" inheritAll="false" dir="${wardir}/WEB-INF/" target="default"/> -->
 	</target>
   
 	
     <target name="zip" depends="clean">
 		<mkdir dir="${deployDir}/builds/"/>
 		<zip destfile="${deployDir}/builds/${appname}.zip" >			
-			<zipfileset dir="${webapp}${catalogdata}/fields" prefix="${catalogdata}/fields" />
-            <zipfileset dir="${webapp}${catalogdata}/views" prefix="${catalogdata}/views" />
+			<zipfileset dir="${basedir}/${catalogdata}" prefix="${catalogdata}" />
 			<zipfileset dir="${etc}" includes="install.xml"/>			
 		</zip>
     </target>

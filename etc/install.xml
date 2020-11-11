@@ -11,8 +11,7 @@
     <property name="resources" location="resources"/>
     <property name="build" location="./tmp/oe_upgrade"/>
     <property name="wardir" location="${build}/wartmp"/>
-    <property name="dockerwebapp" location="/opt/entermediadb/webapp"/>
-    <property name="dockerwebinf" location="${dockerwebapp}/WEB-INF"/>
+    <property name="entermediapath" location="/opt/entermediadb"/>
   	<property name="version"  value="dev"/>
   	<property name="deployDir" location="deploy"/>
   	<property name="versionDir" location="${deployDir}/${version}"/>
@@ -38,8 +37,8 @@
         <!-- <fileset dir="./lib" includes="emplugin-vizone**.jar"/> -->
     </delete>
   	
-    <copy todir="${dockerwebinf}" overwrite="false" preservelastmodified="true">
-        <fileset file="${build}/unpacked"/>
+    <copy todir="${entermediapath}" overwrite="false" preservelastmodified="true">
+        <fileset file="${build}/unpacked" excludes="install.xml"/>
     </copy>
 
   	
@@ -47,12 +46,12 @@
   </target>
   
   <target name="extend">
-  	<echo>Reinstall plugin(s)</echo>
+  	<echo>Reinstall ${appname}</echo>
 <!-- 	 <delete failonerror="false">
        <fileset dir="${dockerwebapp}/asset/plugin"/>
      </delete> -->
-     <copy todir="${dockerwebinf}/" preservelastmodified="true">
-       <fileset dir="${basedir}/"/>
+     <copy todir="${entermediapath}/" preservelastmodified="true">
+       <fileset dir="${basedir}/" excludes="install.xml" />
      </copy>
   <!--  <delete>
       <fileset file="${dockerlib}/app-site-manager**.jar"/>

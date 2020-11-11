@@ -263,21 +263,22 @@
     </name> 
   </property>  
   
-  
-   <property id="wordpressfield" editable="true" stored="true" index="true" keyword="false" filter="false" >Wordpress field mapping
-  
+  <property id="wordpressfield" editable="true" stored="true" index="true" keyword="false" filter="false" >Wordpress field mapping
   </property>  
+
   <property id="xmpmask"  editable="true" stored="true" index="true" keyword="false" filter="false" >XMP Mask
   </property>  
-    <property id="highlight" type="boolean" editable="true" stored="true" index="true" keyword="false" filter="false" >Include Text Highlighting 
+
+  <property id="highlight" type="boolean" editable="true" stored="true" index="true" keyword="false" filter="false" >Include Text Highlighting 
   </property>  
 
-  <property id="vizonefield" editable="true" stored="true" index="true" keyword="false" filter="false" >
-    <name> 
-      <language id="en"><![CDATA[Vizone Field Mapping]]></language>  
-    </name> 
-  </property>  
-
+    <!-- emplugin-vizone -->
+    <property id="vizonefield" editable="true" stored="true" index="true" keyword="false" filter="false" >
+        <name> 
+          <language id="en"><![CDATA[Vizone Field Mapping]]></language>  
+        </name> 
+    </property>  
+    <!-- //emplugin-vizone -->
   
 </properties>
 

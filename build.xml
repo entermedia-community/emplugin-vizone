@@ -6,12 +6,8 @@
    
     <property name="appname" value="${ant.project.name}"/>
     <property name="org" value="EnterMedia, Inc."/>
-    <property name="src" location="${basedir}/src"/>
-    <property name="testsrc" location="${basedir}/test"/>
-    <property name="lib" location="${basedir}/lib"/>
     <property name="etc" location="${basedir}/etc"/>
     <property name="build" location="${basedir}/build"/>
-    <property name="compiled" location="${basedir}/build/compiled"/>
     <property name="wardir" location="${build}/wartmp"/>
     <property name="branch" value="em10_" />
     <property name="majorversion" value="10" />
@@ -21,7 +17,7 @@
     <property name="versionDir" location="${deployDir}/${version}"/>
     <property name="versionedApp" value="${appname}-${version}"/>
 
-    <property name="catalogdata" location="webapp/WEB-INF/entermedia/catalog/data" />
+    <property name="webapp" location="${basedir}/webapp" />
 
     <target name="clean">
          <delete dir="${build}"/>
@@ -35,7 +31,7 @@
     <target name="zip" depends="clean">
 		<mkdir dir="${deployDir}/builds/"/>
 		<zip destfile="${deployDir}/builds/${appname}.zip" >			
-			<zipfileset dir="${basedir}/${catalogdata}" prefix="${catalogdata}" />
+			<zipfileset dir="${webapp}" prefix="webapp" />
 			<zipfileset dir="${etc}" includes="install.xml"/>			
 		</zip>
     </target>
